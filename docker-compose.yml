@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=boite
+      - POSTGRES_DB=projetCourrier
+    # networks:
+    #   - db
+
+  client:
+    build:
+      dockerfile: ./client/dockerfile
+    ports:
+      - "3000:3000"
+#   serveurboite:
+#     build:
+#       dockerfile: ./serveur/dockerfile
+#     depends_on:
+#       - postgres
+#     volumes:
+#       - /dev:/dev
+#     devices:
+#       - /dev/tty.usbmodem14101:/dev/tty.usbmodem14101
+#     ports:
+#       - "9000:9000"
+#     networks:
+#       - db
+
+# networks:
+#   db:
