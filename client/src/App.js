@@ -9,8 +9,10 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+//import { Bar } from "react-chartjs-2";
 //import { faker } from "@faker-js/faker";
+import "bulma/css/bulma.min.css";
+import Graph from "./componnent/Graph";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -52,6 +54,12 @@ function App() {
     }
   };
 
+  const test = async () => {
+    try {
+      await API.get("/open");
+    } catch (error) {}
+  };
+
   //const setDate = new Set();
   //mesures.map((mesure) => labels.push(mesure.id));
   // mesures.forEach((element) => {
@@ -82,10 +90,26 @@ function App() {
 
   return (
     <div>
-      <div style={{ position: "relative", height: "40vh", width: "80vw" }}>
-        <Bar options={options} data={data} />
+      <nav
+        className="navbar is-info mb-4"
+        role="navigation"
+        aria-label="main navigation"
+      >
+        <div className="navbar-brand">
+          <h2 className="title is-1 has-text-white">Boite aux lettres</h2>
+        </div>
+      </nav>
+      <div className="columns">
+        <div className="column is-half">
+          <h1 className="title">{statut}</h1>
+          <button className="button is-primary" onClick={test}>
+            Ouvrir la boite
+          </button>
+        </div>
+        <div className="column is-half">
+          <Graph options={options} data={data} />
+        </div>
       </div>
-      <div>{statut}</div>
     </div>
   );
 }

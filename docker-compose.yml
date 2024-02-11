@@ -8,9 +8,9 @@ services:
     volumes:
       - ~/apps/postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_USER=boite
-      - POSTGRES_DB=projetCourrier
+      - POSTGRES_PASSWORD=${PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DATABASE}
     # networks:
     #   - db
 

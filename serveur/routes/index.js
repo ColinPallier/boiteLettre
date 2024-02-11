@@ -79,7 +79,7 @@ router.get("/statut/:statut", async (req, res) => {
 router.get("/ouvertureForEachDays", async (req, res) => {
   try {
     const data = await db.query(
-      "select to_char(mesures.date, 'yyyy-mm-dd') as jour, count(date) as nombre from mesures where statut='ouvert'  group by to_char(mesures.date, 'yyyy-mm-dd');"
+      "select to_char(mesures.date, 'yyyy-mm-dd') as jour, count(date) as nombre from mesures where statut='ouvert'  group by to_char(mesures.date, 'yyyy-mm-dd') order by to_char(mesures.date, 'yyyy-mm-dd');"
     );
     res.json(data.rows);
   } catch (error) {
