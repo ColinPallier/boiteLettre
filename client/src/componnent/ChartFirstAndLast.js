@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import API from "../api";
+import API from "../utils/api";
 import moment from "moment";
-
 import { Line } from "react-chartjs-2";
 import "bulma/css/bulma.min.css";
 
@@ -26,9 +25,13 @@ ChartJS.register(
   Legend
 );
 
-function ChartComponnent() {
+function ChartFirstAndLast() {
   const [dataMin, setDataMin] = useState([]);
   const [dataMax, setDataMax] = useState([]);
+
+  useEffect(() => {
+    requeteAPI();
+  }, []);
 
   const options = {
     responsive: true,
@@ -66,34 +69,28 @@ function ChartComponnent() {
     },
   };
 
-  useEffect(() => {
-    requeteMesures();
-  }, []);
-
-  const requeteMesures = async () => {
+  const requeteAPI = async () => {
     try {
-      const response = await API.get("/maxHourForEachDays");
-      const response2 = await API.get("/minHourForEachDays");
+      const responseMax = await API.get("/maxHourForEachDays");
+      const responseMin = await API.get("/minHourForEachDays");
 
-      console.log(response2);
-
-      setDataMax(response.data);
-      setDataMin(response2.data);
+      setDataMax(responseMax.data);
+      setDataMin(responseMin.data);
     } catch (error) {
       console.error(error);
     }
   };
 
   const labels = dataMax.map((data) => data.date_colonne);
-  const nombreMax = dataMax.map((data) => data.heure_moyenne_formattee);
-  const nombreMin = dataMin.map((data) => data.heure_moyenne_formattee);
+  const contentMax = dataMax.map((data) => data.heure_max);
+  const contentMin = dataMin.map((data) => data.heure_min);
 
   const data = {
     labels,
     datasets: [
       {
         label: "Heure du premier dépot de courrier",
-        data: nombreMin.map((timeString) =>
+        data: contentMin.map((timeString) =>
           moment.duration(timeString).asHours()
         ),
         borderColor: "rgb(53, 162, 235)",
@@ -101,7 +98,7 @@ function ChartComponnent() {
       },
       {
         label: "Heure du dernier dépot de courrier",
-        data: nombreMax.map((timeString) =>
+        data: contentMax.map((timeString) =>
           moment.duration(timeString).asHours()
         ),
         borderColor: "rgb(255, 99, 132)",
@@ -113,4 +110,4 @@ function ChartComponnent() {
   return <Line options={options} data={data} />;
 }
 
-export default ChartComponnent;
+export default ChartFirstAndLast;
