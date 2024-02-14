@@ -9,10 +9,12 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-//import { Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 //import { faker } from "@faker-js/faker";
 import "bulma/css/bulma.min.css";
-import Graph from "./componnent/Graph";
+import "./componnent/ChartComponnent";
+import ChartComponnent from "./componnent/ChartComponnent";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -54,7 +56,7 @@ function App() {
     }
   };
 
-  const test = async () => {
+  const open = async () => {
     try {
       await API.get("/open");
     } catch (error) {}
@@ -91,7 +93,7 @@ function App() {
   return (
     <div>
       <nav
-        className="navbar is-info mb-4"
+        className="navbar is-primary mb-4 p-4"
         role="navigation"
         aria-label="main navigation"
       >
@@ -101,15 +103,30 @@ function App() {
       </nav>
       <div className="columns">
         <div className="column is-half">
-          <h1 className="title">{statut}</h1>
-          <button className="button is-primary" onClick={test}>
-            Ouvrir la boite
-          </button>
+          <div className="title">Dernier état de la boite aux lettres</div>
+          <div className="box has-text-centered">
+            <p>{statut}</p>
+          </div>
+          <div className="title">Ouverture de la boite au lettre</div>
+          <div className="box has-text-centered">
+            <button className="button is-primary" onClick={open}>
+              Ouvrir la boite
+            </button>
+          </div>
         </div>
         <div className="column is-half">
-          <Graph options={options} data={data} />
+          <Bar options={options} data={data} />
+          <ChartComponnent></ChartComponnent>
         </div>
       </div>
+
+      <footer className="footer">
+        <div className="content has-text-centered">
+          <p>Colin Pallier</p>
+          <p>Projet IOT 2023-2024</p>
+          <p>Université Le Havre Normandie</p>
+        </div>
+      </footer>
     </div>
   );
 }

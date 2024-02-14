@@ -5,8 +5,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var { ReadlineParser } = require("serialport");
-var db = require("./utils/db");
-var port = require("./utils/port");
+
+// var port = require("./utils/port");
 var cors = require("cors");
 
 var indexRouter = require("./routes/index");
@@ -30,18 +30,18 @@ app.use(function (req, res, next) {
 app.listen(9000);
 console.log("Server listening on port 9000");
 
-const parser = new ReadlineParser();
-port.pipe(parser);
+// const parser = new ReadlineParser();
+// port.pipe(parser);
 
-parser.on("data", async (msg) => {
-  try {
-    var statut = JSON.parse(msg).ouverture ? "ouvert" : "ferme";
-    console.log(statut);
-    await db.query("INSERT INTO mesures ( statut ) VALUES ( $1 );", [statut]);
-  } catch (error) {
-    console.log(error);
-  }
-});
+// parser.on("data", async (msg) => {
+//   try {
+//     var statut = JSON.parse(msg).ouverture ? "ouvert" : "ferme";
+//     console.log(statut);
+//     await db.query("INSERT INTO mesures ( statut ) VALUES ( $1 );", [statut]);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 // error handler
 app.use(function (err, req, res, next) {
