@@ -8,30 +8,14 @@ services:
     volumes:
       - ~/apps/postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=${PASSWORD}
+      - POSTGRES_PASSWORD=${DB_PASS}
       - POSTGRES_USER=${DB_USER}
-      - POSTGRES_DB=${DATABASE}
-    # networks:
-    #   - db
+      - POSTGRES_DB=${DB_NAME}
 
   client:
     build:
       dockerfile: ./client/dockerfile
+    env_file:
+      - .env
     ports:
       - "3000:3000"
-#   serveurboite:
-#     build:
-#       dockerfile: ./serveur/dockerfile
-#     depends_on:
-#       - postgres
-#     volumes:
-#       - /dev:/dev
-#     devices:
-#       - /dev/tty.usbmodem14101:/dev/tty.usbmodem14101
-#     ports:
-#       - "9000:9000"
-#     networks:
-#       - db
-
-# networks:
-#   db:

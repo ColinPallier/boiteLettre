@@ -29,7 +29,7 @@ docker-compose up -d
 cd ./serveur &&  npm start
 ```
 
-### Présentation de l'application
+## Présentation de l'application
 
 L'application est composé de 4 modules (de haut en bas et de droite a gauche) :
 
@@ -40,7 +40,7 @@ L'application est composé de 4 modules (de haut en bas et de droite a gauche) :
 
 ![Alt text](rapport/captureProjet.png)
 
-### Technique
+## Technique
 
 Ci dessous un schéma de l'architecture du projet
 

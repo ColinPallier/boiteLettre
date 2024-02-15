@@ -3,10 +3,10 @@ require("dotenv").config({ path: "../.env" });
 
 const pool = new Pool({
   user: process.env.DB_USER,
-  host: process.env.HOST,
-  database: process.env.DATABASE,
-  password: process.env.PASSWORD,
-  port: parseInt(process.env.PORT),
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
+  port: parseInt(process.env.DB_PORT),
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,

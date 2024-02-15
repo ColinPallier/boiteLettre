@@ -1,6 +1,7 @@
 var createError = require("http-errors");
+var fs = require("fs");
 var express = require("express");
-var http = require("http"); // Import the http module
+var https = require("https"); // Import the http module
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
@@ -11,12 +12,17 @@ var cors = require("cors");
 var socketIo = require("socket.io");
 var indexRouter = require("./routes/index");
 
+const options = {
+  key: fs.readFileSync("sslcert/key.pem"),
+  cert: fs.readFileSync("sslcert/cert.pem"),
+};
+
 const app = express();
-const server = http.createServer(app);
+const server = https.createServer(options, app);
 
 const io = socketIo(server);
 
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
