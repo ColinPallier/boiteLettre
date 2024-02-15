@@ -1,7 +1,7 @@
 var createError = require("http-errors");
 var fs = require("fs");
 var express = require("express");
-var https = require("https"); // Import the http module
+var https = require("https");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
@@ -10,7 +10,7 @@ var db = require("./utils/db");
 var port = require("./utils/port");
 var cors = require("cors");
 var socketIo = require("socket.io");
-var indexRouter = require("./routes/index");
+var apiRouter = require("./routes/api");
 
 const options = {
   key: fs.readFileSync("sslcert/key.pem"),
@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api", indexRouter);
+app.use("/api", apiRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));

@@ -14,20 +14,24 @@ const socket = io(`https://${process.env.REACT_APP_IP_SERVEUR}:9000`, {
 
 function App() {
   const [statut, setStatut] = useState("ferme");
+  const [chartDoorUpdate, setChartDoorUpdate] = useState(false);
+  const [chartLetterUpdate, setChartLetterUpdate] = useState(false);
 
   useEffect(() => {
-    initWebSocket();
-  }, []);
+    const initWebSocket = () => {
+      socket.on("statut", (newStatut) => {
+        setStatut(newStatut);
+        if (newStatut === "ouvert") setChartLetterUpdate(!chartLetterUpdate);
+      });
+    };
 
-  const initWebSocket = () => {
-    socket.on("statut", (newStatut) => {
-      setStatut(newStatut);
-    });
-  };
+    initWebSocket();
+  }, [chartLetterUpdate]);
 
   const open = async () => {
     try {
       await API.get("/open");
+      setChartDoorUpdate(!chartDoorUpdate);
     } catch (error) {}
   };
 
@@ -79,16 +83,20 @@ function App() {
               </div>
             </div>
             <div className="tile is-parent">
-              <ChartNumberOpenningDays></ChartNumberOpenningDays>
+              <ChartNumberOpenningDays
+                key={chartLetterUpdate}
+              ></ChartNumberOpenningDays>
             </div>
           </div>
         </div>
         <div className="columns">
           <div className="column is-half">
-            <ChartDoorOpenningDays></ChartDoorOpenningDays>
+            <ChartDoorOpenningDays
+              key={chartDoorUpdate}
+            ></ChartDoorOpenningDays>
           </div>
           <div className="column is-half">
-            <ChartFirstAndLast></ChartFirstAndLast>
+            <ChartFirstAndLast key={chartLetterUpdate}></ChartFirstAndLast>
           </div>
         </div>
       </div>

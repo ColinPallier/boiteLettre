@@ -4,5 +4,6 @@ COPY ./client/package*.json ./
 RUN npm install
 COPY ./client/public ./public
 COPY ./client/src ./src
-CMD ["npm", "start"]
+COPY ./client/.env  ./.env
+CMD HTTPS=true npm start
 

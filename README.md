@@ -11,10 +11,11 @@ cd boiteLettre
 
 2. Téléverser le fichier _./arduino/boite.ino_ dans votre carte arduino
 
-3. Utiliser la commande suite après avoir modifié le fichier .env.example
+3. Utiliser les commandes suivante après avoir modifié les fichiers .env.back.example et .env.front.example
 
 ```:
-cp .env.example .env
+cp .env.back.example .env
+cp .env.front.example ./client/.env
 ```
 
 4. Utiliser la commande suivante afin de créer le conteneur docker contenant la base PG et le front de l'application
